@@ -7,7 +7,9 @@ import java.util.Scanner;
 public class Program {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        try(FileWriter fileWriter = new FileWriter("person.txt")) {
+        try(FileWriter fileWriter = new FileWriter("person.txt", true)) {
+            boolean continueInput = true;
+            do {
             System.out.println("Введите данные пользователя в формате:" +
                     " Фамилия Имя Отчество Датарождения Номертелефона Пол");
             String inputPerson = scanner.nextLine();
@@ -28,6 +30,13 @@ public class Program {
             fileWriter.write("Пол: " + sex + "\n");
             fileWriter.write("--------------------\n");
             System.out.println("Данные записаны в файл.");
+
+            System.out.println("Хоттите ввести ещё одного пользователя (да/нет)");
+            String continueInputString = scanner.nextLine();
+                if (continueInputString.equalsIgnoreCase("нет")) {
+                    continueInput = false;
+                }
+            } while (continueInput);
         } catch (PersonNameException | PersonFamilyException | PersonSurnameException |
                  PersonDataException | PersonNumberException | PersonSexException e) {
             System.out.println("Ошибка: " + e.getMessage());
